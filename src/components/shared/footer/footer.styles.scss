@@ -1,0 +1,11 @@
+@use '../../../styles/base' as *;
+
+.main-footer {
+    @extend %flex-center;
+
+    width: 100vw;
+    height: 4.375rem;
+
+    background-color: $darkGray;
+    color: #888888;
+}

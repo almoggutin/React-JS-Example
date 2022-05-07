@@ -1,0 +1,17 @@
+@use '../../styles/base' as *;
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 90%;
+    min-width: 20rem;
+    max-width: 26.25rem;
+    padding: 1rem;
+
+    border: 1px solid $gray;
+    border-radius: 5px;
+
+    color: $gray;
+}

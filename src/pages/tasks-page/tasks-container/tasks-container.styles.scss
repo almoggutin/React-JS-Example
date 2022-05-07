@@ -1,0 +1,17 @@
+@use '../../../styles/base' as *;
+
+.tasks-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    width: 100%;
+    max-width: 50rem;
+
+    .empty-list {
+        color: $darkGray;
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+}

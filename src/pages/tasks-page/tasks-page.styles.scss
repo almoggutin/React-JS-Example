@@ -1,0 +1,12 @@
+@use '../../styles/base' as *;
+
+.tasks-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    width: 100vw;
+    min-height: calc(100vh - 5rem);
+    padding: 1rem;
+}

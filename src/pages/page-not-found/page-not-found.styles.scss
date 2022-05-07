@@ -1,0 +1,30 @@
+@use '../../styles/base' as *;
+
+.page-not-found {
+    @extend %flex-center;
+    flex-direction: column;
+
+    width: 100vw;
+    min-height: calc(100vh - 5rem);
+
+    h1 {
+        font-size: 3rem;
+        text-align: center;
+    }
+
+    button {
+        width: 12.5rem;
+        height: 3.125rem;
+
+        background-color: $blue;
+        color: #ffffff;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $darkBlue;
+        }
+    }
+}

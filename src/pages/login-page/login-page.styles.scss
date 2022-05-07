@@ -1,0 +1,12 @@
+@use '../../styles/base' as *;
+
+.login-page {
+    @extend %flex-center;
+
+    width: 100vw;
+    min-height: calc(100vh - 5rem);
+
+    .login-page-card {
+        height: 26.25rem;
+    }
+}

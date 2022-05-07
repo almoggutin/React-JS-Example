@@ -1,0 +1,20 @@
+@use '../../styles/base' as *;
+
+button {
+    background-color: $blue;
+    color: $white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+
+    &:hover,
+    &:active {
+        background-color: $darkBlue;
+    }
+
+    &:disabled {
+        background-color: $gray;
+        cursor: not-allowed;
+    }
+}
