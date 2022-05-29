@@ -1,4 +1,3 @@
-import React from 'react';
 import './form-label.styles.scss';
 
 const FormLabel = ({ title, htmlFor, className = 'form-label' }) => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import './tasks-page.styles.scss';
 
 import Loader from '../../components/shared/loader/Loader.component';
@@ -15,7 +15,7 @@ import { getTasks } from '../../services/tasks.service';
 
 const TasksPage = () => {
     const { authState } = useContext(AuthContext);
-    const { dispatchTasksState } = useContext(TasksContext);
+    const { updateTasksState } = useContext(TasksContext);
 
     const [isLoading, setIsLoading] = useState(true);
 
@@ -25,7 +25,7 @@ const TasksPage = () => {
         getTasks(authState.userID).then((res) => {
             const { tasks } = res.data;
 
-            dispatchTasksState(initTasksAction(tasks));
+            updateTasksState(initTasksAction(tasks));
 
             setTimeout(() => {
                 setIsLoading(false);

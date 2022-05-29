@@ -1,14 +1,11 @@
 const signupFormActionTypes = {
-    UPDATE_FIRST_NAME: 'UPDATE_FIRST_NAME',
-    UPDATE_LAST_NAME: 'UPDATE_LAST_NAME',
-    UPDATE_EMAIL: 'UPDATE_EMAIL',
-    UPDATE_PASSWORD: 'UPDATE_PASSWORD',
-    UPDATE_REPEATED_PASSWORD: 'UPDATE_REPEATED_PASSWORD',
+    UPDATE_FORM_FIELD: 'UPDATE_FORM_FIELD',
 };
 
-export const updateFormFieldAction = (type, value, isValid, errorMessage = '') => ({
-    type,
+export const updateFormFieldAction = (inputType, value, isValid = true, errorMessage = '') => ({
+    type: signupFormActionTypes.UPDATE_FORM_FIELD,
     payload: {
+        inputType,
         value,
         isValid,
         errorMessage,

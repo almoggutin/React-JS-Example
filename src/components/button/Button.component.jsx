@@ -1,4 +1,3 @@
-import React from 'react';
 import './button.styles.scss';
 
 const Button = ({ type = 'button', className, disabled = false, handleClick, children }) => {

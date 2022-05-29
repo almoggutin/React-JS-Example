@@ -1,14 +1,13 @@
-import React from 'react';
 import './login-page.styles.scss';
 
-import Loader from '../../components/shared/loader/Loader.component';
-import useLoader from '../../hooks/useLoader.hook';
+import useAuth from '../../hooks/useAuth.hooks';
 
+import Loader from '../../components/shared/loader/Loader.component';
 import Card from '../../components/card/Card.component';
 import LoginForm from './login-form/LoginForm.component';
 
 const LoginPage = () => {
-    const isLoading = useLoader();
+    const isLoading = useAuth();
 
     return isLoading ? (
         <Loader />

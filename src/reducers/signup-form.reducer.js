@@ -1,5 +1,7 @@
+import { cloneDeep } from 'lodash';
+
 import signupFormActionTypes from '../actions/signup-form.actions';
-import * as formUtils from '../utils/form.utils';
+import { areFormValuesValid } from '../utils/form.utils';
 
 export const SIGNUP_FORM_INITIAL_STATE = {
     values: {
@@ -28,85 +30,20 @@ export const SIGNUP_FORM_INITIAL_STATE = {
 
 const signupFormReducer = (state, action) => {
     switch (action.type) {
-        case signupFormActionTypes.UPDATE_FIRST_NAME: {
-            const { value, isValid, errorMessage } = action.payload;
+        case signupFormActionTypes.UPDATE_FORM_FIELD: {
+            const { inputType, value, isValid, errorMessage } = action.payload;
 
-            const updatedValues = { ...state.values, firstName: value };
-            const updatedValidities = { ...state.validities, firstName: isValid };
-            const updatedErrorMessages = { ...state.errorMessages, firstName: errorMessage };
-            const updatedIsFormValidity =
-                formUtils.areValuesValid(updatedValues) && formUtils.areValueValiditiesValid(updatedValidities);
+            const updatedState = cloneDeep(state);
+            console.log(inputType);
+            console.log(updatedState);
+            console.log(value);
+            updatedState.values[inputType] = value;
+            updatedState.validities[inputType] = isValid;
+            updatedState.errorMessages[inputType] = errorMessage;
+            updatedState.isFormValid =
+                areFormValuesValid(updatedState.values) && areFormValuesValid(updatedState.validities);
 
-            return {
-                values: updatedValues,
-                validities: updatedValidities,
-                errorMessages: updatedErrorMessages,
-                isFormValid: updatedIsFormValidity,
-            };
-        }
-        case signupFormActionTypes.UPDATE_LAST_NAME: {
-            const { value, isValid, errorMessage } = action.payload;
-
-            const updatedValues = { ...state.values, lastName: value };
-            const updatedValidities = { ...state.validities, lastName: isValid };
-            const updatedErrorMessages = { ...state.errorMessages, lastName: errorMessage };
-            const updatedIsFormValidity =
-                formUtils.areValuesValid(updatedValues) && formUtils.areValueValiditiesValid(updatedValidities);
-
-            return {
-                values: updatedValues,
-                validities: updatedValidities,
-                errorMessages: updatedErrorMessages,
-                isFormValid: updatedIsFormValidity,
-            };
-        }
-        case signupFormActionTypes.UPDATE_EMAIL: {
-            const { value, isValid, errorMessage } = action.payload;
-
-            const updatedValues = { ...state.values, email: value };
-            const updatedValidities = { ...state.validities, email: isValid };
-            const updatedErrorMessages = { ...state.errorMessages, email: errorMessage };
-            const updatedIsFormValidity =
-                formUtils.areValuesValid(updatedValues) && formUtils.areValueValiditiesValid(updatedValidities);
-
-            return {
-                values: updatedValues,
-                validities: updatedValidities,
-                errorMessages: updatedErrorMessages,
-                isFormValid: updatedIsFormValidity,
-            };
-        }
-        case signupFormActionTypes.UPDATE_PASSWORD: {
-            const { value, isValid, errorMessage } = action.payload;
-
-            const updatedValues = { ...state.values, password: value };
-            const updatedValidities = { ...state.validities, password: isValid };
-            const updatedErrorMessages = { ...state.errorMessages, password: errorMessage };
-            const updatedIsFormValidity =
-                formUtils.areValuesValid(updatedValues) && formUtils.areValueValiditiesValid(updatedValidities);
-
-            return {
-                values: updatedValues,
-                validities: updatedValidities,
-                errorMessages: updatedErrorMessages,
-                isFormValid: updatedIsFormValidity,
-            };
-        }
-        case signupFormActionTypes.UPDATE_REPEATED_PASSWORD: {
-            const { value, isValid, errorMessage } = action.payload;
-
-            const updatedValues = { ...state.values, repeatedPassword: value };
-            const updatedValidities = { ...state.validities, repeatedPassword: isValid };
-            const updatedErrorMessages = { ...state.errorMessages, repeatedPassword: errorMessage };
-            const updatedIsFormValidity =
-                formUtils.areValuesValid(updatedValues) && formUtils.areValueValiditiesValid(updatedValidities);
-
-            return {
-                values: updatedValues,
-                validities: updatedValidities,
-                errorMessages: updatedErrorMessages,
-                isFormValid: updatedIsFormValidity,
-            };
+            return updatedState;
         }
         default:
             return { ...state };

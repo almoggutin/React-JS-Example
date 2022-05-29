@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import './task.styles.scss';
 
 import { TasksContext } from '../../../../contexts/Tasks.context';
@@ -9,7 +9,7 @@ import Button from '../../../../components/button/Button.component';
 import * as tasksService from '../../../../services/tasks.service';
 
 const Task = ({ id, index, task, isCompleted }) => {
-    const { dispatchTasksState } = useContext(TasksContext);
+    const { updateTasksState } = useContext(TasksContext);
 
     const [taskClassName, setTaskClassName] = useState('');
     const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
@@ -21,7 +21,7 @@ const Task = ({ id, index, task, isCompleted }) => {
         try {
             await tasksService.updateTask(id, isChecked);
 
-            dispatchTasksState(taskActions.updateTaskAction(index, isChecked));
+            updateTasksState(taskActions.updateTaskAction(index, isChecked));
             setIsCheckboxChecked(isChecked);
             isChecked ? setTaskClassName('completed') : setTaskClassName('');
         } catch (err) {
@@ -33,7 +33,7 @@ const Task = ({ id, index, task, isCompleted }) => {
         try {
             await tasksService.deleteTask(id);
 
-            dispatchTasksState(taskActions.deleteTaskAction(index));
+            updateTasksState(taskActions.deleteTaskAction(index));
         } catch (err) {
             alert('Something went wrong.');
         }

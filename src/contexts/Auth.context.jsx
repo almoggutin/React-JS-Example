@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import { createContext, useReducer } from 'react';
 
 import authReducer, { AUTH_INITIAL_STATE } from '../reducers/auth.reducer';
 
@@ -10,7 +10,9 @@ const AuthContextProvider = ({ children }) => {
     const userData = getUserFromSessionStorage();
     const [authState, dispatchAuthState] = useReducer(authReducer, userData || AUTH_INITIAL_STATE);
 
-    const value = { authState, dispatchAuthState };
+    const updateAuthState = (action) => dispatchAuthState(action);
+
+    const value = { authState, updateAuthState };
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

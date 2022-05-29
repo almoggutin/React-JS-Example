@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react';
+import { useState, useRef, useContext } from 'react';
 import './add-tasks-form.styles.scss';
 
 import { AuthContext } from '../../../contexts/Auth.context';
@@ -11,7 +11,7 @@ import { createTask } from '../../../services/tasks.service';
 
 const AddTasksForm = () => {
     const { authState } = useContext(AuthContext);
-    const { dispatchTasksState } = useContext(TasksContext);
+    const { updateTasksState } = useContext(TasksContext);
 
     const [isInputValid, setIsInputValid] = useState(true);
     const [isFormValid, setIsFormValid] = useState(false);
@@ -35,7 +35,7 @@ const AddTasksForm = () => {
             const res = await createTask(authState.userID, taskInput);
             const { task } = res.data;
 
-            dispatchTasksState(addTaskAction(task));
+            updateTasksState(addTaskAction(task));
 
             formEl.current.reset();
         } catch (err) {

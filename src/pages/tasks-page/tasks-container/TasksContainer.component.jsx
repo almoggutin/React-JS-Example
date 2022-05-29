@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import './tasks-container.styles.scss';
 
 import { TasksContext } from '../../../contexts/Tasks.context';

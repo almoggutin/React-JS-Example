@@ -1,4 +1,4 @@
-import React, { useReducer, useContext } from 'react';
+import { useReducer, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import isEmail from 'validator/lib/isEmail';
 import './login-form.styles.scss';
@@ -10,7 +10,7 @@ import FormInputContainer from '../../../components/form/form-input-container/Fo
 import Button from '../../../components/button/Button.component';
 
 import loginFormReducer, { LOGIN_FORM_INITIAL_STATE } from '../../../reducers/login-form.reducer';
-import loginFormActionTypes, { updateFormFieldAction } from '../../../actions/login-form.actions';
+import { updateFormFieldAction } from '../../../actions/login-form.actions';
 
 import { login } from '../../../services/auth.service';
 import { setUserDataOnSessionStorage } from '../../../utils/storage.utils';
@@ -18,7 +18,7 @@ import { setUserDataOnSessionStorage } from '../../../utils/storage.utils';
 const LoginForm = () => {
     const navigate = useNavigate();
 
-    const { dispatchAuthState } = useContext(AuthContext);
+    const { updateAuthState } = useContext(AuthContext);
 
     const [loginFormState, dispatchLoginFormState] = useReducer(loginFormReducer, LOGIN_FORM_INITIAL_STATE);
 
@@ -26,32 +26,20 @@ const LoginForm = () => {
         const emailInput = event.target.value.toLowerCase().trim();
 
         if (emailInput === '') {
-            dispatchLoginFormState(
-                updateFormFieldAction(
-                    loginFormActionTypes.UPDATE_EMAIL,
-                    emailInput,
-                    false,
-                    'Please enter an email address'
-                )
-            );
+            dispatchLoginFormState(updateFormFieldAction('email', emailInput, false, 'Please enter an email address'));
 
             return;
         }
 
         if (!isEmail(emailInput)) {
             dispatchLoginFormState(
-                updateFormFieldAction(
-                    loginFormActionTypes.UPDATE_EMAIL,
-                    emailInput,
-                    false,
-                    'Please enter a valid email address'
-                )
+                updateFormFieldAction('email', emailInput, false, 'Please enter a valid email address')
             );
 
             return;
         }
 
-        dispatchLoginFormState(updateFormFieldAction(loginFormActionTypes.UPDATE_EMAIL, emailInput, true));
+        dispatchLoginFormState(updateFormFieldAction('email', emailInput));
     };
 
     const handlePasswordInput = (event) => {
@@ -59,12 +47,7 @@ const LoginForm = () => {
 
         if (passwordInput === '') {
             dispatchLoginFormState(
-                updateFormFieldAction(
-                    loginFormActionTypes.UPDATE_PASSWORD,
-                    passwordInput,
-                    false,
-                    'Please enter your password'
-                )
+                updateFormFieldAction('password', passwordInput, false, 'Please enter your password')
             );
 
             return;
@@ -74,7 +57,7 @@ const LoginForm = () => {
         if (!passwordRegex.test(passwordInput)) {
             dispatchLoginFormState(
                 updateFormFieldAction(
-                    loginFormActionTypes.UPDATE_PASSWORD,
+                    'password',
                     passwordInput,
                     false,
                     'Please enter a password between 8-20 characters with at least 1 capital letter and 1 number'
@@ -84,7 +67,7 @@ const LoginForm = () => {
             return;
         }
 
-        dispatchLoginFormState(updateFormFieldAction(loginFormActionTypes.UPDATE_PASSWORD, passwordInput, true));
+        dispatchLoginFormState(updateFormFieldAction('password', passwordInput));
     };
 
     const handleSubmit = async (event) => {
@@ -95,7 +78,7 @@ const LoginForm = () => {
 
             const res = await login(email, password);
             const { userID } = res.data;
-            dispatchAuthState(loginAction(userID));
+            updateAuthState(loginAction(userID));
             setUserDataOnSessionStorage({ userID });
 
             navigate('/tasks');

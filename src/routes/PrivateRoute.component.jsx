@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
 
 import { getUserFromSessionStorage } from '../utils/storage.utils';

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './sidebar.styles.scss';
 
@@ -9,7 +9,7 @@ import { logout } from '../../../services/auth.service';
 import { removeUserDataFromSessionStorage } from '../../../utils/storage.utils';
 
 const Sidebar = ({ className, hideSidebar }) => {
-    const { authState, dispatchAuthState } = useContext(AuthContext);
+    const { authState, updateAuthState } = useContext(AuthContext);
 
     const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ const Sidebar = ({ className, hideSidebar }) => {
             await logout(userID);
 
             removeUserDataFromSessionStorage();
-            dispatchAuthState(logoutAction());
+            updateAuthState(logoutAction());
             hideSidebar();
 
             navigate('/');

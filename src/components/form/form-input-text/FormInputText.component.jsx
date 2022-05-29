@@ -1,4 +1,3 @@
-import React from 'react';
 import './form-input-text.styles.scss';
 
 const FormInputText = ({ id, type = 'text', className = 'form-input', required = false, handleInput }) => {

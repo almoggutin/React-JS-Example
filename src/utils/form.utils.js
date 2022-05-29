@@ -1,11 +1,5 @@
-export const areValuesValid = (values) => {
-    for (let key of Object.keys(values)) if (values[key] === '') return false;
+export const areFormValuesValid = (values) => {
+    const areValuesValid = Object.values(values).every((value) => value);
 
-    return true;
-};
-
-export const areValueValiditiesValid = (values) => {
-    for (let key of Object.keys(values)) if (values[key] === false) return false;
-
-    return true;
+    return areValuesValid;
 };

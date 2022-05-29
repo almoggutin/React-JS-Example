@@ -1,4 +1,3 @@
-import React from 'react';
 import './form-input-container.styles.scss';
 
 import FormLabel from '../form-label/FormLabel.component';

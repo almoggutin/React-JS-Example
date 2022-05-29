@@ -1,5 +1,7 @@
+import { cloneDeep } from 'lodash';
+
 import loginFormActionTypes from '../actions/login-form.actions';
-import * as formUtils from '../utils/form.utils';
+import { areFormValuesValid } from '../utils/form.utils';
 
 export const LOGIN_FORM_INITIAL_STATE = {
     values: {
@@ -19,37 +21,17 @@ export const LOGIN_FORM_INITIAL_STATE = {
 
 const loginFormReducer = (state, action) => {
     switch (action.type) {
-        case loginFormActionTypes.UPDATE_EMAIL: {
-            const { value, isValid, errorMessage } = action.payload;
+        case loginFormActionTypes.UPDATE_FORM_FIELD: {
+            const { inputType, value, isValid, errorMessage } = action.payload;
 
-            const updatedValues = { ...state.values, email: value };
-            const updatedValidities = { ...state.validities, email: isValid };
-            const updatedErrorMessages = { ...state.errorMessages, email: errorMessage };
-            const updatedIsFormValidity =
-                formUtils.areValuesValid(updatedValues) && formUtils.areValueValiditiesValid(updatedValidities);
+            const updatedState = cloneDeep(state);
+            updatedState.values[inputType] = value;
+            updatedState.validities[inputType] = isValid;
+            updatedState.errorMessages[inputType] = errorMessage;
+            updatedState.isFormValid =
+                areFormValuesValid(updatedState.values) && areFormValuesValid(updatedState.validities);
 
-            return {
-                values: updatedValues,
-                validities: updatedValidities,
-                errorMessages: updatedErrorMessages,
-                isFormValid: updatedIsFormValidity,
-            };
-        }
-        case loginFormActionTypes.UPDATE_PASSWORD: {
-            const { value, isValid, errorMessage } = action.payload;
-
-            const updatedValues = { ...state.values, password: value };
-            const updatedValidities = { ...state.validities, password: isValid };
-            const updatedErrorMessages = { ...state.errorMessages, password: errorMessage };
-            const updatedIsFormValidity =
-                formUtils.areValuesValid(updatedValues) && formUtils.areValueValiditiesValid(updatedValidities);
-
-            return {
-                values: updatedValues,
-                validities: updatedValidities,
-                errorMessages: updatedErrorMessages,
-                isFormValid: updatedIsFormValidity,
-            };
+            return updatedState;
         }
         default:
             return { ...state };
